@@ -173,7 +173,7 @@
 		<div class="footer--center">
 			<p class="footer__name">Juan Sebastian Mora Tibamoso</p>
 			<p class="footer__email">juan.mora02@uptc.edu.co</p>
-			<a class="footer__credits" href="https://github.com/JSEB99" target="_blank">
+			<a class="footer__credits" href="https://github.com/JSEB99/dashboard-full-stack" target="_blank">
 				<img src={Icon} alt="github" class="footer__icon" />
 			</a>
 		</div>
