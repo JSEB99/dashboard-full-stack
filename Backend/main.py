@@ -19,7 +19,7 @@ app.add_middleware(
 
 # Resto de tu configuración de rutas y lógica de la aplicación
 
-days = ["06","08","13","15"]
+days = ["1","2","3","4","5","6","7","8","9"]
 
 # Entidad Analitica
 class Analisis(BaseModel):
@@ -35,13 +35,13 @@ async def presencia_personas_evento(dia: str):
     Captura de datos para grafico de personas presentes en el evento
     a lo largo de las dos horas.
     Entradas:
-    dia del evento (dos cifras)
+    numero de evento (ej. evento 1 ... evento 10)
     Salidas:
     json de los datos
     '''
     if dia in days:
-        print(f"evento_dia_{dia}")
-        data = tendencia_personas(f"evento_dia_{dia}")
+        print(f"evento_{dia}")
+        data = tendencia_personas(f"evento_{dia}")
         data_to_json = data.to_json(orient='split')
         return json.loads(data_to_json)
     else:
@@ -53,12 +53,12 @@ async def asistencia_evento(dia: str):
     Proceso:
     Captura de datos de personas que asistieron al evento
     Entradas:
-    dia del evento (dos cifras)
+    numero de evento (ej. evento 1 ... evento 10)
     Salidas:
     json de los datos
     '''
     if dia in days:
-        first_data = asistencia_eventos(f"evento_dia_{dia}")
+        first_data = asistencia_eventos(f"evento_{dia}")
         data = personas_por_programa(first_data)
         data_to_json = data.to_json(orient='index')
         return json.loads(data_to_json)
@@ -71,7 +71,7 @@ async def tomar_usuarios():
     Proceso:
     Captura de los usuarios registrados en el evento
     Entradas:
-    dia del evento (dos cifras)
+    numero de evento (ej. evento 1 ... evento 10)
     Salidas:
     json de los datos
     '''
@@ -85,12 +85,12 @@ async def registro_eventos(dia: str):
     Proceso:
     Captura de datos por evento registrado
     Entradas:
-    dia del evento (dos cifras)
+    numero de evento (ej. evento 1 ... evento 10)
     Salidas:
     json de los datos
     '''
     if dia in days:
-        data = extraer_db_a_dataframe(f"evento_dia_{dia}")
+        data = extraer_db_a_dataframe(f"evento_{dia}")
         data_to_json = data.to_json(orient='split')
         return json.loads(data_to_json)
     else:
@@ -104,14 +104,14 @@ async def total_personas(dia: str):
     - Promedio de duración en el evento
     - Desviación estandar de la duración del evento
     Entradas:
-    día del evento (dos cifras)
+    numero de evento (ej. evento 1 ... evento 10)
     Salidas:
     json de los datos
     '''
     if dia in days:
-        cantidad_de_personas = total_personas_sesion(f"evento_dia_{dia}")
-        promedio_de_duracion = duracion_promedio_sesion(f"evento_dia_{dia}")
-        standard_deviation = duracion_std_sesion(f"evento_dia_{dia}")
+        cantidad_de_personas = total_personas_sesion(f"evento_{dia}")
+        promedio_de_duracion = duracion_promedio_sesion(f"evento_{dia}")
+        standard_deviation = duracion_std_sesion(f"evento_{dia}")
         return Analisis(total = cantidad_de_personas,
                         promedio = promedio_de_duracion,
                         std = standard_deviation)
@@ -124,12 +124,12 @@ async def minima_duracion(dia: str):
     Proceso:
     Captura la persona con el menor tiempo durante el evento
     Entradas:
-    día del evento (dos cifras)
+    numero de evento (ej. evento 1 ... evento 10)
     Salidas:
     json con los datos
     '''
     if dia in days:
-        data = minima_duracion_sesion(f"evento_dia_{dia}")
+        data = minima_duracion_sesion(f"evento_{dia}")
         data_to_json = data.to_json(orient='index')
         return json.loads(data_to_json)
     else:

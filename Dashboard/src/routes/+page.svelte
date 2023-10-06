@@ -9,12 +9,12 @@
 
 	let datasetInfo: DatasetInfo;
 
-	let valorSelect: string = '13';
+	let valorSelect: string = '1';
 
 	let tendenciaData: Promise<any> = getDummyData(valorSelect);
 
-	async function getDummyData(fechaSesion: string): Promise<any> {
-		const API_URL = `http://127.0.0.1:8000/eventos/${fechaSesion}`;
+	async function getDummyData(evento: string): Promise<any> {
+		const API_URL = `http://127.0.0.1:8000/eventos/${evento}`;
 
 		const response = await fetch(API_URL);
 		const jsonData = await response.json(); // Espera la respuesta y el JSON
@@ -44,8 +44,8 @@
 
 	let pieChartData = getPieChartData(valorSelect);
 
-	async function getPieChartData(fechaSesion: string): Promise<any> {
-		const API_URL = `http://127.0.0.1:8000/asistencia/${fechaSesion}`;
+	async function getPieChartData(evento: string): Promise<any> {
+		const API_URL = `http://127.0.0.1:8000/asistencia/${evento}`;
 
 		const response = await fetch(API_URL);
 		const jsonData = await response.json(); // Espera la respuesta y el JSON
@@ -111,10 +111,15 @@
 						void updateData();
 					}}
 				>
-					<option value="06">Evento 06</option>
-					<option value="08">Evento 08</option>
-					<option value="13">Evento 13</option>
-					<option value="15">Evento 15</option>
+					<option value="1">Evento Sep/06</option>
+					<option value="2">Evento Sep/08</option>
+					<option value="3">Evento Sep/13</option>
+					<option value="4">Evento Sep/15</option>
+					<option value="5">Evento Sep/20</option>
+					<option value="6">Evento Sep/22</option>
+					<option value="7">Evento Sep/29</option>
+					<option value="8">Evento Oct/04</option>
+					<option value="9">Evento Oct/05</option>
 				</select>
 			</div>
 		</nav>
@@ -173,7 +178,11 @@
 		<div class="footer--center">
 			<p class="footer__name">Juan Sebastian Mora Tibamoso</p>
 			<p class="footer__email">juan.mora02@uptc.edu.co</p>
-			<a class="footer__credits" href="https://github.com/JSEB99/dashboard-full-stack" target="_blank">
+			<a
+				class="footer__credits"
+				href="https://github.com/JSEB99/dashboard-full-stack"
+				target="_blank"
+			>
 				<img src={Icon} alt="github" class="footer__icon" />
 			</a>
 		</div>
