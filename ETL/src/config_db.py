@@ -1,4 +1,5 @@
 import psycopg2
+import pandas as pd
 from decouple import config
 import csv
 
@@ -67,6 +68,10 @@ archivos = [
     "evento_9.csv",
 ]
 
+# Crear un DataFrame vacío para almacenar las filas no insertadas
+filas_no_insertadas = pd.DataFrame(columns=["Nombre", "Apellido", "Correo electrónico",
+                                   "Hora a la que se unió", "Hora a la que salió", "NombreCompleto", "duración"])
+
 for archivo in archivos:
     with open(f"../clean_data/{archivo}", "r", encoding="UTF-8") as file:
         reader = csv.DictReader(file)
@@ -98,3 +103,11 @@ for archivo in archivos:
             else:
                 print(
                     f"El correo {correo} no existe en la tabla registro_usuarios. La fila no se insertará.")
+                # Agregar la fila al DataFrame de filas no insertadas
+                filas_no_insertadas = pd.concat(
+                    [filas_no_insertadas, pd.DataFrame([row])], ignore_index=True)
+
+
+# O guardar el DataFrame de filas no insertadas como Excel
+filas_no_insertadas.to_excel(
+    "../clean_data/filas_no_insertadas.xlsx", index=False)
